@@ -89,8 +89,6 @@ module.exports = {
         avatar: req.file.filename,
       },
     }).exec((err, userDetails) => {
-      if (err) res.status(500).json({ message: err });
-
       if (err) res.status(500).json({ error: 1, payload: err });
       else {
         const image = {};

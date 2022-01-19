@@ -2,7 +2,7 @@
 
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const DEFAULTPASSWORD = "rolegeniusadmin";
+const DEFAULTPASSWORD = "beerhadmin";
 const bcrypt = require("bcryptjs");
 
 const UserSchema = new Schema(
@@ -70,7 +70,7 @@ const UserSchema = new Schema(
     },
   },
   {
-    id: false,
+    id: true,
     toObject: {
       virtuals: true,
       getters: true,

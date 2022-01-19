@@ -102,7 +102,7 @@ module.exports = {
         },
         function (token, user, done) {
           var data = {
-            from: config.mailer.mailerID,
+            from: process.env.MAILER_EMAIL_ID,
             to: "juniordtf@gmail.com",
             subject: "Password help has arrived!",
             template: "forgot-password-email",
@@ -116,6 +116,8 @@ module.exports = {
             if (!err) {
               return res.json({
                 message: "Kindly check your email for further instructions",
+                email: user.email,
+                token: token,
               });
             } else {
               return done(err);
@@ -131,6 +133,7 @@ module.exports = {
 
   reset_password: function (req, res, next) {
     User.findOne({
+      email: req.body.email,
       reset_password_token: req.body.token,
       reset_password_expires: {
         $gt: Date.now(),
@@ -138,6 +141,7 @@ module.exports = {
     }).exec(function (err, user) {
       if (!err && user) {
         if (req.body.newPassword === req.body.verifyPassword) {
+          user.password = bcrypt.hashSync(req.body.newPassword, 10);
           user.hash_password = bcrypt.hashSync(req.body.newPassword, 10);
           user.reset_password_token = undefined;
           user.reset_password_expires = undefined;
@@ -148,7 +152,7 @@ module.exports = {
               });
             } else {
               var data = {
-                from: config.mailer.mailerID,
+                from: process.env.MAILER_EMAIL_ID,
                 to: "juniordtf@gmail.com",
                 subject: "Password reset confirmation",
                 template: "reset-password-email",
