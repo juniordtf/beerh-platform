@@ -19,13 +19,6 @@ router.get("/:id", VerifyToken, controller.retrieve);
 router.post("/", controller.create);
 router.put("/:id", VerifyToken, controller.update);
 router.delete("/:id", VerifyToken, controller.delete);
-router.post("/photo", VerifyToken, upload.any(), controller.uploadPhoto);
-router.put(
-  "/photo/:id",
-  VerifyToken,
-  upload.single("file"),
-  controller.updatePhoto
-);
 router.put(
   "/avatar/:id",
   VerifyToken,

@@ -22,11 +22,10 @@ var options = {
   viewEngine: {
     extname: ".html",
     layoutsDir: "api/templates/",
-    defaultLayout: "forgot-password-email",
+    defaultLayout: false,
     partialsDir: "api/templates/",
   },
   viewPath: "api/templates/",
-  extName: ".html",
 };
 
 smtpTransport.use("compile", hbs(options));
@@ -35,8 +34,8 @@ module.exports = {
   login: (req, res) => {
     User.findOne({ email: req.body.email }, function (err, user) {
       console.log(user);
-      if (err) {
-        return res.status(401).json({ message: err });
+      if (err || user == null) {
+        return res.status(401).json({ message: "Usuário não encontrado" });
       }
       var isPasswordValid = bcrypt.compareSync(
         req.body.password,
@@ -104,7 +103,7 @@ module.exports = {
           var data = {
             from: process.env.MAILER_EMAIL_ID,
             to: "juniordtf@gmail.com",
-            subject: "Password help has arrived!",
+            subject: "Solicitação de troca de senha",
             template: "forgot-password-email",
             context: {
               token: token,
@@ -126,6 +125,7 @@ module.exports = {
         },
       ],
       function (err) {
+        console.log(err);
         return res.status(422).json({ message: err });
       }
     );
@@ -154,7 +154,7 @@ module.exports = {
               var data = {
                 from: process.env.MAILER_EMAIL_ID,
                 to: "juniordtf@gmail.com",
-                subject: "Password reset confirmation",
+                subject: "Confirmação de troca de senha",
                 template: "reset-password-email",
                 context: {
                   name: user.name,

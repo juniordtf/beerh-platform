@@ -41,6 +41,8 @@ app.get("/", (req, res) => {
   res.send("Welcome to BeerH");
 });
 
+app.use("/v1/", express.static("public"));
+
 // Start server
 server.listen(config.port, function () {
   console.log(

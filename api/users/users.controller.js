@@ -51,37 +51,6 @@ module.exports = {
       }
     );
   },
-  uploadPhoto: (req, res) => {
-    User.create(req.body, (err, userDetails) => {
-      if (err) {
-        console.error(err);
-        res.status(500).json({ message: err });
-      }
-      var new_img = userDetails.picture;
-      new_img.img.data = fs.readFileSync(req.file.path);
-      new_img.img.contentType = "image/jpeg";
-      new_img.save();
-      res.json({ message: "New image added to the db!" });
-    });
-  },
-  updatePhoto: (req, res) => {
-    const userId = req.params.id;
-    User.findByIdAndUpdate(userId, {
-      $set: {
-        picture: {
-          data: fs.readFileSync(req.file.path),
-          contentType: "image/jpeg",
-        },
-      },
-    }).exec((err, userDetails) => {
-      if (err) res.status(500).json({ message: err });
-      var new_img = userDetails.picture;
-      new_img.data = fs.readFileSync(req.file.path);
-      new_img.contentType = "image/jpeg";
-
-      res.json({ message: "New image added to the db!" });
-    });
-  },
   uploadAvatar: (req, res) => {
     const userId = req.params.id;
     User.findByIdAndUpdate(userId, {
