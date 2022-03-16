@@ -58,7 +58,6 @@ module.exports = {
           token: token,
           name: user.name,
           _id: user._id,
-          picture: user.picture,
           avatar: user.avatar,
           message: "User Logged In Successfully",
         });
@@ -142,7 +141,6 @@ module.exports = {
       if (!err && user) {
         if (req.body.newPassword === req.body.verifyPassword) {
           user.password = bcrypt.hashSync(req.body.newPassword, 10);
-          user.hash_password = bcrypt.hashSync(req.body.newPassword, 10);
           user.reset_password_token = undefined;
           user.reset_password_expires = undefined;
           user.save(function (err) {

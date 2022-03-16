@@ -19,7 +19,7 @@ module.exports = {
     User.findOne({ _id: userId }).exec((err, userDetails) => {
       if (err) {
         console.error(err);
-        res.status(500).json({ message: err });
+        return res.status(500).json({ message: err });
       }
       res.status(200).json(userDetails);
     });
@@ -28,7 +28,7 @@ module.exports = {
     User.create(req.body, (err, userDetails) => {
       if (err) {
         console.error(err);
-        res.status(500).json({ message: err });
+        return res.status(500).json({ message: err });
       }
       res.status(201).json("User Created Successfully");
     });

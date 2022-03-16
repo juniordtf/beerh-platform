@@ -45,11 +45,6 @@ const UserSchema = new Schema(
       type: String,
       required: false,
     },
-    picture: {
-      data: Buffer,
-      contentType: String,
-      required: false,
-    },
     avatar: {
       type: String,
       required: false,

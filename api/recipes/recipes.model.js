@@ -4,10 +4,6 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const IngredientSchema = new Schema({
-  id: {
-    type: Number,
-    required: true,
-  },
   quantity: {
     type: Number,
     required: true,
@@ -23,10 +19,6 @@ const IngredientSchema = new Schema({
 });
 
 const RampSchema = new Schema({
-  id: {
-    type: Number,
-    required: true,
-  },
   temperature: {
     type: Number,
     required: true,
@@ -38,16 +30,12 @@ const RampSchema = new Schema({
 });
 
 const BoilSchema = new Schema({
-  id: {
-    type: Number,
-    required: true,
-  },
   quantity: {
     type: Number,
     required: true,
   },
   unit: {
-    type: Number,
+    type: String,
     required: true,
   },
   name: {
@@ -60,18 +48,25 @@ const BoilSchema = new Schema({
   },
 });
 
+const FermentationAndAgeingSchema = new Schema({
+  temperature: {
+    type: Number,
+    required: true,
+  },
+  time: {
+    type: Number,
+    required: true,
+  },
+});
+
 const RecipeSchema = new Schema(
   {
-    id: {
-      type: String,
-      required: true,
-    },
     title: {
       type: String,
       required: true,
     },
     volume: {
-      type: String,
+      type: Number,
       required: true,
     },
     style: {
@@ -79,23 +74,23 @@ const RecipeSchema = new Schema(
       required: true,
     },
     og: {
-      type: String,
+      type: Number,
       required: true,
     },
     fg: {
-      type: String,
+      type: Number,
       required: true,
     },
     ibu: {
-      type: String,
+      type: Number,
       required: true,
     },
     abv: {
-      type: String,
+      type: Number,
       required: true,
     },
     color: {
-      type: String,
+      type: Number,
       required: true,
     },
     ingredients: {
@@ -111,11 +106,11 @@ const RecipeSchema = new Schema(
       required: true,
     },
     fermentation: {
-      type: String,
+      type: [FermentationAndAgeingSchema],
       required: true,
     },
     ageing: {
-      type: String,
+      type: [FermentationAndAgeingSchema],
       required: true,
     },
     carbonationMethod: {
@@ -123,7 +118,7 @@ const RecipeSchema = new Schema(
       required: true,
     },
     carbonationValue: {
-      type: String,
+      type: Number,
       required: true,
     },
     carbonationUnit: {
@@ -131,24 +126,24 @@ const RecipeSchema = new Schema(
       required: true,
     },
     estimatedTime: {
-      type: String,
+      type: Number,
       required: true,
     },
     annotation: {
       type: String,
       required: true,
     },
-    createdAt: {
+    ownerId: {
       type: String,
-      required: true,
+      required: false,
     },
     lastUpdateDate: {
-      type: String,
+      type: Date,
       required: true,
     },
   },
   {
-    id: false,
+    id: true,
     toObject: {
       virtuals: true,
       getters: true,

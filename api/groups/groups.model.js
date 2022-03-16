@@ -9,10 +9,15 @@ const GroupSchema = new Schema(
       type: String,
       required: true,
     },
+    avatar: {
+      type: String,
+      required: false,
+    },
     ownerId: {
       type: Schema.Types.ObjectId,
       ref: "User",
     },
+    memberIds: [{ type: Schema.Types.ObjectId, ref: "User" }],
     creationDate: {
       type: Date,
       required: true,

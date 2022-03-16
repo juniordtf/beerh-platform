@@ -6,7 +6,7 @@ module.exports = {
   index: (req, res) => {
     Recipe.find({}).exec((err, recipeDetails) => {
       if (err) {
-        res.status(500).json({ message: err });
+        return res.status(500).json({ message: err });
       }
       res.status(200).json({
         message: "Recipe Details fetched Successfully",
@@ -18,7 +18,7 @@ module.exports = {
     const recipeId = req.params.id;
     Recipe.findOne({ _id: recipeId }).exec((err, recipeDetails) => {
       if (err) {
-        res.status(500).json({ message: err });
+        return res.status(500).json({ message: err });
       }
 
       res.status(200).json({
@@ -30,9 +30,10 @@ module.exports = {
   create: (req, res) => {
     Recipe.create(req.body, (err, recipeDetails) => {
       if (err) {
-        res.status(500).json({ message: err });
+        console.log(err);
+        return res.status(500).json({ message: err });
       }
-      res
+      return res
         .status(201)
         .json({ message: "Recipe Created Successfully", data: recipeDetails });
     });
