@@ -53,15 +53,16 @@ module.exports = {
   },
   uploadAvatar: (req, res) => {
     const userId = req.params.id;
+
     User.findByIdAndUpdate(userId, {
       $set: {
-        avatar: req.file.filename,
+        avatar: req.body.name,
       },
     }).exec((err, userDetails) => {
-      if (err) res.status(500).json({ error: 1, payload: err });
+      if (err) return res.status(500).json({ error: 1, payload: err });
       else {
         const image = {};
-        image.id = req.file.filename;
+        image.id = req.body.name;
         image.url = `/uploads/${image.id}`;
         res
           .status(200)

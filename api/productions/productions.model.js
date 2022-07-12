@@ -9,6 +9,10 @@ const ProductionSchema = new Schema(
       type: String,
       required: true,
     },
+    ownerId: {
+      type: String,
+      required: false,
+    },
     volume: {
       type: Number,
       required: true,
@@ -54,48 +58,48 @@ const ProductionSchema = new Schema(
       required: true,
     },
     brewDate: {
-      type: Date,
+      type: String,
       required: true,
     },
     fermentationDate: {
-      type: Date,
+      type: String,
       required: true,
     },
     carbonationDate: {
-      type: Date,
+      type: String,
       required: true,
     },
     ageingDate: {
-      type: Date,
+      type: String,
       required: true,
     },
     fillingDate: {
-      type: Date,
+      type: String,
       required: true,
     },
     initialCalendarDate: {
-      type: Date,
+      type: String,
       required: true,
     },
     duration: {
-      type: Number,
+      type: String,
       required: false,
     },
     createdAt: {
-      type: Date,
+      type: String,
       required: true,
     },
     lastUpdateDate: {
-      type: Date,
+      type: String,
       required: true,
+    },
+    viewToRestore: {
+      type: String,
+      required: false,
     },
     ownerId: {
       type: String,
       required: false,
-    },
-    viewToRestore: {
-      type: String,
-      required: true,
     },
   },
   {
