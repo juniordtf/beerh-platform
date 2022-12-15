@@ -11,7 +11,12 @@ const crypto = require("crypto");
 var hbs = require("nodemailer-express-handlebars");
 
 var smtpTransport = nodemailer.createTransport({
-  service: process.env.MAILER_SERVICE_PROVIDER,
+  host: "smtp-mail.outlook.com", // hostname
+  secureConnection: false, // TLS requires secureConnection to be false
+  port: 587, // port for secure SMTP
+  tls: {
+    ciphers: "SSLv3",
+  },
   auth: {
     user: process.env.MAILER_EMAIL_ID,
     pass: process.env.MAILER_PASSWORD,

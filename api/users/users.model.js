@@ -46,7 +46,8 @@ const UserSchema = new Schema(
       required: false,
     },
     avatar: {
-      type: String,
+      data: Buffer,
+      contentType: String,
       required: false,
     },
     gender: {

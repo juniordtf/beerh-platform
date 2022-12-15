@@ -31,6 +31,9 @@ app.use(function (req, res, next) {
 
 const fs = require("fs");
 const server = require("http").createServer(app);
+//const upload = require("/public/uploads");
+//console.log(__dirname);
+
 require("./config/express")(app);
 require("./routes")(app);
 //require("./config/seed");
@@ -41,7 +44,10 @@ app.get("/", (req, res) => {
   res.send("Welcome to BeerH");
 });
 
-app.use("/v1/public", express.static("public"));
+//app.use("/v1/public", express.static("public"));
+app.use("/v1/", express.static("public"));
+
+//app.use("/uploads", upload);
 
 // Start server
 server.listen(config.port, function () {

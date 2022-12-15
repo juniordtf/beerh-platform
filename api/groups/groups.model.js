@@ -13,11 +13,16 @@ const GroupSchema = new Schema(
       type: String,
       required: false,
     },
+    description: {
+      type: String,
+      required: false,
+    },
     ownerId: {
       type: Schema.Types.ObjectId,
       ref: "User",
     },
     memberIds: [{ type: Schema.Types.ObjectId, ref: "User" }],
+    inviteTokens: { type: Array, default: [] },
     creationDate: {
       type: Date,
       required: true,

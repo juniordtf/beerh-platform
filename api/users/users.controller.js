@@ -51,19 +51,29 @@ module.exports = {
       }
     );
   },
-  uploadAvatar: (req, res) => {
+  uploadAvatar: async (req, res) => {
     const userId = req.params.id;
+    const formData = await req.body;
+    var userJSON = await JSON.parse(formData.file);
+    console.log(userJSON);
+
+    const avatar = await Buffer.from(userJSON.uri, "utf-8");
+
+    //delete userJSON.avatar
+    //userJSON.avatar=avatar
+    console.log(avatar);
 
     User.findByIdAndUpdate(userId, {
       $set: {
-        avatar: req.body.name,
+        avatar: avatar,
       },
     }).exec((err, userDetails) => {
       if (err) return res.status(500).json({ error: 1, payload: err });
       else {
         const image = {};
-        image.id = req.body.name;
-        image.url = `/uploads/${image.id}`;
+        image.id = userJSON.name;
+        image.url = `uploads/${userId}`;
+        console.log(image);
         res
           .status(200)
           .json({ error: 0, payload: { id: image.id, url: image.url } });
