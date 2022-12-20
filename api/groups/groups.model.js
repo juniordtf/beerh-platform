@@ -21,11 +21,24 @@ const GroupSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "User",
     },
-    memberIds: [{ type: Schema.Types.ObjectId, ref: "User" }],
+    members: [
+      {
+        id: { type: Schema.Types.ObjectId, ref: "User" },
+        name: {
+          type: String,
+          required: true,
+        },
+        avatar: {
+          data: Buffer,
+          contentType: String,
+          required: false,
+        },
+      },
+    ],
     inviteTokens: { type: Array, default: [] },
-    creationDate: {
-      type: Date,
-      required: true,
+    is_active: {
+      type: Boolean,
+      default: true,
     },
   },
   {

@@ -101,6 +101,10 @@ const ProductionSchema = new Schema(
       type: String,
       required: false,
     },
+    is_active: {
+      type: Boolean,
+      default: true,
+    },
   },
   {
     id: true,

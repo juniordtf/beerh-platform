@@ -58,6 +58,22 @@ module.exports = {
       });
     });
   },
+  getAllowedGroups: (req, res) => {
+    const userId = req.params.id;
+    Group.find({
+      members: { $elemMatch: { id: userId } },
+      is_active: true,
+    }).exec((err, Groups) => {
+      if (err) {
+        return res.status(500).json({ message: err });
+      }
+      console.log(Groups);
+      return res.status(200).json({
+        message: "Allowed groups fetched Successfully",
+        data: Groups,
+      });
+    });
+  },
   create: (req, res) => {
     Group.create(req.body, (err, GroupDetails) => {
       if (err) {
@@ -65,6 +81,7 @@ module.exports = {
         console.log(err);
         return res.status(500).json({ message: err });
       }
+      console.log(GroupDetails);
       return res
         .status(201)
         .json({ message: "Group Created Successfully", data: GroupDetails });
@@ -80,12 +97,12 @@ module.exports = {
     );
   },
   delete: (req, res) => {
-    const GroupId = req.params.id;
-    Group.findByIdAndUpdate(GroupId, { $set: { is_active: false } }).exec(
+    const groupId = req.params.id;
+    Group.findByIdAndUpdate(groupId, { $set: { is_active: false } }).exec(
       (err, GroupDetails) => {
-        if (err) res.status(500).json({ message: err });
+        if (err) return res.status(500).json({ message: err });
 
-        res.status(200).json({ message: "Group Deleted" });
+        return res.status(200).json({ message: "Group Deleted" });
       }
     );
   },
@@ -121,6 +138,7 @@ module.exports = {
             },
             { new: true, useFindAndModify: false }
           ).exec(function (err, group) {
+            console.log("Grupo 1: " + group);
             done(err, user, token, group);
           });
         },
@@ -146,8 +164,47 @@ module.exports = {
               });
             } else {
               console.log(err);
-              res.status(500).json({ message: err });
+              return res.status(500).json({ message: err });
             }
+          });
+        },
+      ],
+      function (err) {
+        console.log(err);
+        return res.status(422).json({ message: err });
+      }
+    );
+  },
+  add_member: (req, res) => {
+    async.waterfall(
+      [
+        function (done) {
+          User.findOne({
+            _id: req.body.memberId,
+          }).exec(function (err, user) {
+            if (user) {
+              done(err, user);
+            } else {
+              done("User not found.");
+            }
+          });
+        },
+        function (user, done) {
+          Group.findOneAndUpdate(
+            { inviteTokens: req.body.groupToken },
+            {
+              $push: {
+                members: { id: user.id, name: user.name, avatar: user.avatar },
+              },
+              $pull: {
+                inviteTokens: req.body.groupToken,
+              },
+            },
+            { new: true, useFindAndModify: false }
+          ).exec(function (err, group) {
+            console.log("Grupo 2: " + group);
+            if (err) return res.status(500).json({ message: err });
+            return res.status(200).json({ message: "Member added to group" });
           });
         },
       ],
