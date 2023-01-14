@@ -53,26 +53,19 @@ module.exports = {
   },
   uploadAvatar: async (req, res) => {
     const userId = req.params.id;
-    const formData = await req.body;
-    var userJSON = await JSON.parse(formData.file);
-    console.log(userJSON);
 
-    const avatar = await Buffer.from(userJSON.uri, "utf-8");
-
-    //delete userJSON.avatar
-    //userJSON.avatar=avatar
-    console.log(avatar);
+    console.log(req.file);
 
     User.findByIdAndUpdate(userId, {
       $set: {
-        avatar: avatar,
+        avatar: req.file.filename,
       },
     }).exec((err, userDetails) => {
       if (err) return res.status(500).json({ error: 1, payload: err });
       else {
         const image = {};
-        image.id = userJSON.name;
-        image.url = `uploads/${userId}`;
+        image.id = req.file.filename;
+        image.url = `./public/uploads/${userId}`;
         console.log(image);
         res
           .status(200)

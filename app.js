@@ -29,25 +29,24 @@ app.use(function (req, res, next) {
   next();
 });
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 const fs = require("fs");
 const server = require("http").createServer(app);
-//const upload = require("/public/uploads");
-//console.log(__dirname);
-
 require("./config/express")(app);
 require("./routes")(app);
 //require("./config/seed");
 //require("./config/data");
+//console.log(__dirname);
 
 // Root route of express app
 app.get("/", (req, res) => {
   res.send("Welcome to BeerH");
 });
 
-//app.use("/v1/public", express.static("public"));
-app.use("/v1/", express.static("public"));
-
-//app.use("/uploads", upload);
+app.use("/v1/assets", express.static("public"));
+app.use("/v1/uploads", express.static("public/uploads"));
 
 // Start server
 server.listen(config.port, function () {
