@@ -135,10 +135,10 @@ const RecipeSchema = new Schema(
     },
     ownerId: {
       type: String,
-      required: false,
+      required: true,
     },
-    lastUpdateDate: {
-      type: Date,
+    ownerName: {
+      type: String,
       required: true,
     },
   },
