@@ -21,6 +21,14 @@ const GroupSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "User",
     },
+    ownerName: {
+      type: String,
+      required: false,
+    },
+    ownerAvatar: {
+      type: String,
+      required: false,
+    },
     members: [
       {
         id: { type: Schema.Types.ObjectId, ref: "User" },
@@ -29,8 +37,7 @@ const GroupSchema = new Schema(
           required: true,
         },
         avatar: {
-          data: Buffer,
-          contentType: String,
+          type: String,
           required: false,
         },
       },

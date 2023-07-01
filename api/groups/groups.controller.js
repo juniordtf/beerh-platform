@@ -144,7 +144,7 @@ module.exports = {
         function (user, token, group, done) {
           var data = {
             from: process.env.MAILER_EMAIL_ID,
-            to: "juniordtf@gmail.com",
+            to: user.email,
             subject: `Convite para participar do grupo ${group.name}`,
             template: "invite-group-member",
             context: {
@@ -212,5 +212,27 @@ module.exports = {
         return res.status(422).json({ message: err });
       }
     );
+  },
+  uploadAvatar: async (req, res) => {
+    const groupId = req.params.id;
+
+    console.log(req.file);
+
+    Group.findByIdAndUpdate(groupId, {
+      $set: {
+        avatar: req.file.filename,
+      },
+    }).exec((err, groupDetails) => {
+      if (err) return res.status(500).json({ error: 1, payload: err });
+      else {
+        const image = {};
+        image.id = req.file.filename;
+        image.url = `./public/uploads/${groupId}`;
+        console.log(image);
+        res
+          .status(200)
+          .json({ error: 0, payload: { id: image.id, url: image.url } });
+      }
+    });
   },
 };

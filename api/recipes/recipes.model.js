@@ -131,15 +131,15 @@ const RecipeSchema = new Schema(
     },
     annotation: {
       type: String,
-      required: true,
+      required: false,
     },
     ownerId: {
       type: String,
-      required: true,
+      required: false,
     },
     ownerName: {
       type: String,
-      required: true,
+      required: false,
     },
   },
   {

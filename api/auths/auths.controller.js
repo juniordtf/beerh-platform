@@ -106,7 +106,7 @@ module.exports = {
         function (token, user, done) {
           var data = {
             from: process.env.MAILER_EMAIL_ID,
-            to: "juniordtf@gmail.com",
+            to: user.email,
             subject: "Solicitação de troca de senha",
             template: "forgot-password-email",
             context: {
@@ -156,7 +156,7 @@ module.exports = {
             } else {
               var data = {
                 from: process.env.MAILER_EMAIL_ID,
-                to: "juniordtf@gmail.com",
+                to: user.email,
                 subject: "Confirmação de troca de senha",
                 template: "reset-password-email",
                 context: {

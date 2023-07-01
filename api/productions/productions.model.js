@@ -9,10 +9,6 @@ const ProductionSchema = new Schema(
       type: String,
       required: true,
     },
-    ownerId: {
-      type: String,
-      required: false,
-    },
     volume: {
       type: Number,
       required: true,
@@ -81,17 +77,13 @@ const ProductionSchema = new Schema(
       type: String,
       required: true,
     },
+    initialBrewDate: {
+      type: String,
+      required: true,
+    },
     duration: {
       type: String,
       required: false,
-    },
-    createdAt: {
-      type: String,
-      required: true,
-    },
-    lastUpdateDate: {
-      type: String,
-      required: true,
     },
     viewToRestore: {
       type: String,
@@ -104,6 +96,14 @@ const ProductionSchema = new Schema(
     ownerName: {
       type: String,
       required: false,
+    },
+    recipeId: {
+      type: String,
+      required: true,
+    },
+    recipeName: {
+      type: String,
+      required: true,
     },
     is_active: {
       type: Boolean,
