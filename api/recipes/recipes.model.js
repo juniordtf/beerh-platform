@@ -4,6 +4,10 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const IngredientSchema = new Schema({
+  id: {
+    type: String,
+    required: true,
+  },
   quantity: {
     type: Number,
     required: true,
@@ -19,6 +23,10 @@ const IngredientSchema = new Schema({
 });
 
 const RampSchema = new Schema({
+  id: {
+    type: String,
+    required: true,
+  },
   temperature: {
     type: Number,
     required: true,
@@ -30,6 +38,10 @@ const RampSchema = new Schema({
 });
 
 const BoilSchema = new Schema({
+  id: {
+    type: String,
+    required: true,
+  },
   quantity: {
     type: Number,
     required: true,
@@ -49,6 +61,10 @@ const BoilSchema = new Schema({
 });
 
 const FermentationAndAgeingSchema = new Schema({
+  id: {
+    type: String,
+    required: true,
+  },
   temperature: {
     type: Number,
     required: true,
